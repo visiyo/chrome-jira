@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "Chrome JIRA",
+  "description": "Copy JIRA ticket to clipboard",
+  
+  "icons": 
+    {
+      "16": "images/copy.png", 
+      "48": "images/copy.png",
+      "128": "images/copy.png"
+    },
+    "background":{
+        "scripts":["content.js"]
+    },
+    "browser_action":
+    {
+      "default_icon": "images/copy.png",
+      "default_popup": "popup.html"
+    }
+  }
