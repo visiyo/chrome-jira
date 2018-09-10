@@ -15,18 +15,42 @@ document.addEventListener("DOMContentLoaded", function() {
 chrome.runtime.onMessage.addListener(function(request, sender) {
   if (request.action == "getSource") {
     var html = request.source;
-    var htmlTitle1 = html.split('</title>')[0];
-    var htmlTitle2 = htmlTitle1.split('<title>')[1];
-    var title = htmlTitle2.replace('[', '').replace(']', ' #comment');
-    document.getElementById("jiraTicket").value = title;
+    var elements = $(html);
+    var found = elements.filter('title');
+    var ticketStr = '';
+    if (found && found.text() && found.text().indexOf('[') > -1) {
+      ticketStr = found.text().replace('[', '').replace(']', ' #comment');
+      document.getElementById("jiraTicket").value = ticketStr;
+      var message = document.querySelector('#message');
+      message.innerText = 'Click Copy';
+    } else { // popup
+      chrome.tabs.getSelected(null, function(tab) {
+        /* not work
+        var storyLinkArr = elements.filter('#field-copy-text').val().split('/');
+        var idStory = storyLinkArr[storyLinkArr.length -1];
+        */
+        var tabUrl1 = tab.url.split('TAO-')[1];
+        var idStory = 'TAO-' + tabUrl1.split('&')[0];
+        ticketStr = idStory + ' #comment ';
 
-    var message = document.querySelector('#message');
-    message.innerText = 'Click Copy';
+        var parser = new DOMParser()
+        var doc = parser.parseFromString(html, "text/html");
+        var allH1 = doc.querySelectorAll('h1');
+        allH1.forEach(function(h1) {
+          if (h1.className && h1.innerHTML !== 'Flag notifications') {
+            ticketStr += h1.innerHTML;
+          }
+        });
+        document.getElementById("jiraTicket").value = ticketStr;
+
+        var message = document.querySelector('#message');
+        message.innerText = 'Click Copy';
+      });
+    }
   }
 });
 
 function onWindowLoad() {
-
   var message = document.querySelector('#message');
 
   chrome.tabs.executeScript(null, {
