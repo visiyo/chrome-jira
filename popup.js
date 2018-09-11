@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         var idStory = 'TAO-' + tabUrl1.split('&')[0];
         ticketStr = idStory + ' #comment ';
 
-        var parser = new DOMParser()
+        var parser = new DOMParser();
         var doc = parser.parseFromString(html, "text/html");
         var allH1 = doc.querySelectorAll('h1');
         allH1.forEach(function(h1) {
