@@ -2,12 +2,12 @@
   "manifest_version": 2,
   "version": "1.0",
   "name": "Chrome JIRA",
-  "description": "Copy JIRA ticket to clipboard",
+  "description": "Provide enhanced functionality to JIRA Cloud",
   "icons": { "16": "images/jira.png", "128": "images/jira.png" },
   "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
   "browser_action": {
     "default_icon": "images/jira.png",
-    "default_popup": "popup.html"
+    "default_popup": "./app/popup.html"
   },
   "permissions": [
     "tabs", "<all_urls>"

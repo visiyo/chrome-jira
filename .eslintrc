@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "airbnb/legacy"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "globals": {
+    "api": true
+  },
+  "rules": {
+    "comma-dangle": 0,
+    "func-names": 0,
+    "max-len": 0,
+    "padded-blocks": 0,
+    "space-before-function-paren": 0,
+    "vars-on-top": 0,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "no-param-reassign": 0,
+    "no-lonely-if": 0,
+    "angular/no-service-method": 0,
+    "angular/controller-as-vm": 0
+  }
+}

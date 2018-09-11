@@ -1,26 +1,27 @@
-document.addEventListener("DOMContentLoaded", function() {
+/* globals chrome, $ */
+
+document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('copy').addEventListener('click', copy);
 
   function copy() {
-    var copyText = document.getElementById("jiraTicket");
+    var copyText = document.getElementById('jiraTicket');
     copyText.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
 
     var message = document.querySelector('#message');
     message.innerText = 'copied';
   }
-  
 });
 
-chrome.runtime.onMessage.addListener(function(request, sender) {
-  if (request.action == "getSource") {
+chrome.runtime.onMessage.addListener(function(request, sender) { // eslint-disable-line no-unused-vars
+  if (request.action === 'getSource') {
     var html = request.source;
     var elements = $(html);
     var found = elements.filter('title');
     var ticketStr = '';
     if (found && found.text() && found.text().indexOf('[') > -1) {
       ticketStr = found.text().replace('[', '').replace(']', ' #comment');
-      document.getElementById("jiraTicket").value = ticketStr;
+      document.getElementById('jiraTicket').value = ticketStr;
       var message = document.querySelector('#message');
       message.innerText = 'Click Copy';
     } else { // popup
@@ -34,17 +35,17 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         ticketStr = idStory + ' #comment ';
 
         var parser = new DOMParser();
-        var doc = parser.parseFromString(html, "text/html");
+        var doc = parser.parseFromString(html, 'text/html');
         var allH1 = doc.querySelectorAll('h1');
         allH1.forEach(function(h1) {
           if (h1.className && h1.innerHTML !== 'Flag notifications') {
             ticketStr += h1.innerHTML;
           }
         });
-        document.getElementById("jiraTicket").value = ticketStr;
+        document.getElementById('jiraTicket').value = ticketStr;
 
-        var message = document.querySelector('#message');
-        message.innerText = 'Click Copy';
+        var idMessage = document.querySelector('#message');
+        idMessage.innerText = 'Click Copy';
       });
     }
   }
@@ -54,7 +55,7 @@ function onWindowLoad() {
   var message = document.querySelector('#message');
 
   chrome.tabs.executeScript(null, {
-    file: "getPagesSource.js"
+    file: 'app/getPagesSource.js'
   }, function() {
     // If you try and inject into an extensions page or the webstore/NTP you'll get an error
     if (chrome.runtime.lastError) {
