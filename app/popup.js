@@ -30,8 +30,18 @@ chrome.runtime.onMessage.addListener(function(request, sender) { // eslint-disab
         var storyLinkArr = elements.filter('#field-copy-text').val().split('/');
         var idStory = storyLinkArr[storyLinkArr.length -1];
         */
+        /*
         var tabUrl1 = tab.url.split('TAO-')[1];
         var idStory = 'TAO-' + tabUrl1.split('&')[0];
+        */
+       var tabUrlArr = tab.url.split('selectedIssue=');
+       if (tabUrlArr.length < 2) {
+         alert('can not get ticket id');
+         return;
+       }
+       var tabUrl = tabUrlArr[1];
+       var idStory = tabUrl.split('&')[0];
+       
         ticketStr = idStory + ' #comment ';
 
         var parser = new DOMParser();
