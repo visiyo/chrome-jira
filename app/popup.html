@@ -4,13 +4,21 @@
     <title>JIRA Ticket</title>
 </head>
 <body>
+  <div id="idLoading" style="display: none;">
+    <img style="width: 100px; height: 100px;" src="https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp">
+  </div>
+  <div id="idNotTicketFound" style="display: none;">
+   JIRA Ticket not found
+  </div>
+  <div id="idFoundTicket" style="display: none;">
     <h2>JIRA Ticket</h2>
     <div id='message'>Injecting Script....</div>
-
+  
     <input id="jiraTicket" value="" />
-
-  <div style="margin-top: 5px; text-align: center">
-    <button id="copy">Copy</button>
+  
+    <div style="margin-top: 5px; text-align: center">
+      <button id="copy">Copy</button>
+    </div>
   </div>
 
   <script src="popup.js"></script>

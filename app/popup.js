@@ -34,14 +34,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) { // eslint-disab
         var tabUrl1 = tab.url.split('TAO-')[1];
         var idStory = 'TAO-' + tabUrl1.split('&')[0];
         */
-       var tabUrlArr = tab.url.split('selectedIssue=');
-       if (tabUrlArr.length < 2) {
-         alert('can not get ticket id');
-         return;
-       }
-       var tabUrl = tabUrlArr[1];
-       var idStory = tabUrl.split('&')[0];
-       
+        var tabUrlArr = tab.url.split('selectedIssue=');
+        if (tabUrlArr.length < 2) {
+          alert('cannot get ticket id'); // eslint-disable-line
+          return;
+        }
+        var tabUrl = tabUrlArr[1];
+        var idStory = tabUrl.split('&')[0];
+
         ticketStr = idStory + ' #comment ';
 
         var parser = new DOMParser();
@@ -62,14 +62,20 @@ chrome.runtime.onMessage.addListener(function(request, sender) { // eslint-disab
 });
 
 function onWindowLoad() {
-  var message = document.querySelector('#message');
+  document.querySelector('#idLoading').style.display = 'block';
+  document.querySelector('#idNotTicketFound').style.display = 'none';
+  document.querySelector('#idFoundTicket').style.display = 'none';
 
   chrome.tabs.executeScript(null, {
     file: 'app/getPagesSource.js'
   }, function() {
+    document.querySelector('#idLoading').style.display = 'none';
     // If you try and inject into an extensions page or the webstore/NTP you'll get an error
     if (chrome.runtime.lastError) {
-      message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+      // message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+      document.querySelector('#idNotTicketFound').style.display = 'block';
+    } else {
+      document.querySelector('#idFoundTicket').style.display = 'block';
     }
   });
 

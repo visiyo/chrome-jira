@@ -1,6 +1,6 @@
 # Chrome JIRA
 
-Generate Jira ticket with id and title of story
+Copy a Jira ticket with id and title of story to make it easy to add text to a code commit
 
 ## DEVELOPMENT SETUP
 
