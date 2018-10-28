@@ -71,7 +71,7 @@ function onWindowLoad() {
   }, function() {
     document.querySelector('#idLoading').style.display = 'none';
     // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-    if (chrome.runtime.lastError) {
+    if (chrome.runtime && chrome.runtime.lastError) {
       // message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
       document.querySelector('#idNotTicketFound').style.display = 'block';
     } else {
